@@ -1,12 +1,11 @@
 #include<stdio.h>
-#include<conio.h>
 #include<stdlib.h>
 struct Graph
 {
   int source;
   int dest;
   int weight;
-}graph;
+};
 int parent[999];
 
 int find1(int i)
