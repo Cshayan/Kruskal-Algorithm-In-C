@@ -1,16 +1,17 @@
 #include<stdio.h>
+#include<conio.h>
 #include<stdlib.h>
 struct Graph
 {
   int source;
   int dest;
   int weight;
-};
+}graph;
 int parent[999];
 
 int find1(int i)
 {
-    while(parent[i])
+    while(parent[i] > -1)
         i = parent[i];
 
     return i;
@@ -21,14 +22,9 @@ void swap(int *a, int *b)
     *a = *b;
     *b =temp;
 }
-int union1(int i,int j)
+int union1(int i,int j, int parent[])
 {
-    if(i != j)
-    {
-        parent[j] = i;
-        return 1;
-    }
-    return 0;
+   parent[i] = j;
 }
 int partition(struct Graph G[], int low, int high)
 {
@@ -65,13 +61,17 @@ void Kruskal(struct Graph G[], int V, int E)
     int i,  cost, p1, p2;
     cost = 0;
 
-    for(i=0; i< V-1; i++)
+    for(i=0; i < V; i++)
+        parent[i] = -1;
+
+    for(i=0; i< E; i++)
     {
         p1 = find1(G[i].source);
         p2 = find1(G[i].dest);
 
-            if(union1(p1, p2))
+            if(p1 != p2)
             {
+                union1(p1, p2, parent);
                 printf("%d\t%d\t%d\n", G[i].source, G[i].dest, G[i].weight);
                 cost += G[i].weight;
             }
